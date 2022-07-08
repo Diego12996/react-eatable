@@ -82,13 +82,14 @@ export const reset = css`
 `;
 
 export const global = css`
-  @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Montserrat:wght@400;500;600&display=swap");
+  @import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:ital,wght@0,200;0,300;0,400;0,600;0,700;0,900;1,200;1,300;1,400;1,600;1,700;1,900&display=swap');
 
   body {
     font-family: ${fonts.primary};
     padding: 1rem;
     max-width: 360px;
     margin: 0 auto;
-    color: ${colors.gray[900]};
+    color: #333333;
+    background-color: #F6F6F9;
   }
 `;
