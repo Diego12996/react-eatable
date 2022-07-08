@@ -1,10 +1,9 @@
 import { useEffect, useState } from "react";
-import { getDishes } from "../services/dishes-services";
+import { deleteDish, getDishes } from "../services/dishes-services";
 import styled from '@emotion/styled'
 import { colors } from "../styles/colors";
 import { RiEditBoxFill, RiDeleteBinFill } from 'react-icons/ri'
-import EditDish from "./edit-page";
-import { Link, Routes } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const Container = styled.div`
   display: flex;
@@ -37,6 +36,9 @@ const Icons = styled.div`
 
 function ListDishes() {
   function DishCard({dish}) {
+    function Borrar() {
+      deleteDish(dish.id)
+    }
     return (
       <FoodCard>
         <DishImage src={dish.picture_url} alt="dish delicious" />
@@ -47,12 +49,16 @@ function ListDishes() {
             <Link to={`/update/${dish.id}`}>
               <RiEditBoxFill />
             </Link>
-            <RiDeleteBinFill />
+            <RiDeleteBinFill onClick={Borrar}/>
           </Icons>
         </DishInfo>
       </FoodCard>
     )
   }
+
+  const Modal = styled.div`
+
+  `
 
   const [dishes, setDishes] = useState([]);
   
@@ -69,6 +75,7 @@ function ListDishes() {
         <DishCard key={dish.id} dish={dish} />
         ))}
       </Container>
+      <Link to="/create">Create Product</Link>
     </div>
   );
 }

@@ -1,7 +1,5 @@
 import { css } from "@emotion/react";
-import { colors } from "./colors";
 import { fonts } from "./typography";
-
 export const reset = css`
   /* CSS Reset by Andy Bell (https://piccalil.li/blog/a-modern-css-reset/) */
 

@@ -5,9 +5,23 @@ export function getDishes() {
 }
 
 export function updateDish(id, data) {
-  return fetch(`${BASE_URL}/products/${id}`,{
+  return fetch(`${BASE_URL}/products/${id}`, {
     method: "PATCH",
     headers: {"Content-Type": "application/json"},
     body: JSON.stringify(data)
+  })
+}
+
+export function deleteDish(id) {
+  return fetch(`${BASE_URL}/products/${id}`, {
+    method: "DELETE"
+  })
+}
+
+export function createDish(newDishData) {
+  return fetch(`${BASE_URL}/products`, {
+    method: "POST",
+    headers: {"Content-Type": "application/json"},
+    body: JSON.stringify(newDishData)
   })
 }

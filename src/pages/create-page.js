@@ -1,13 +1,8 @@
 import { useState } from "react";
-import { useParams } from "react-router-dom";
 import Input from "../components/input";
-import { updateDish } from "../services/dishes-services";
+import { createDish } from "../services/dishes-services";
 
-function EditDish() {
-
-  const params = useParams()
-
-  console.log(params)
+function CreateDish() {
 
   const [data, setData] = useState({
     name: "",
@@ -26,7 +21,7 @@ function EditDish() {
 
   function handleSubmit(e) {
     e.preventDefault();
-    updateDish(params.id, data)
+    createDish(data)
   }
 
   return (
@@ -68,4 +63,4 @@ function EditDish() {
   )
 }
 
-export default EditDish;
+export default CreateDish;
