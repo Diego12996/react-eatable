@@ -34,6 +34,41 @@ const Icons = styled.div`
   color: #FA4A0C;
 `
 
+const ButtonMedium = styled.button`
+  border: none;
+  width: 262px;
+  height: 47px;
+  color: white;
+  border-radius: 30px;
+  background: #FA4A0C;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center; 
+  padding: 12px 16px;
+
+`
+
+const DeleteModal = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem;
+  gap: 1rem;
+  background: #F6F6F9;
+  border-radius: 20px;
+`
+
+function ConfirmDelete() {
+  return (
+    <DeleteModal>
+      <h3>Are you sure?</h3>
+      <ButtonMedium>Yes, delete it!</ButtonMedium>
+      <ButtonMedium>No, cancel!</ButtonMedium>
+    </DeleteModal>
+  )
+}
+
 function ListDishes() {
   function DishCard({dish}) {
     function Borrar() {
@@ -57,7 +92,15 @@ function ListDishes() {
   }
 
   const Modal = styled.div`
-
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    background-color: #000000bf;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   `
 
   const [dishes, setDishes] = useState([]);
@@ -76,6 +119,9 @@ function ListDishes() {
         ))}
       </Container>
       <Link to="/create">Create Product</Link>
+      <Modal>
+        <ConfirmDelete />
+      </Modal>
     </div>
   );
 }
