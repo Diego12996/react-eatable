@@ -1,15 +1,13 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Input from "../components/input";
-import { updateDish } from "../services/dishes-services";
+import { getDish, updateDish } from "../services/dishes-services";
 
 function EditDish() {
 
   const params = useParams()
-
   console.log(params)
-
-  const [data, setData] = useState({
+  const [dataForm, setDataForm] = useState({
     name: "",
     price: "",
     description: "",
@@ -17,16 +15,25 @@ function EditDish() {
     picture_url: ""
   })
 
-  const { name, price, description, category, picture_url} = data;
+  console.log(dataForm)
+
+  const { name, price, description, category, picture_url} = dataForm;
+
+  useEffect(() => {
+    getDish(parseInt(params.id))
+      .then((data) => setDataForm(data))
+      .catch(console.log);
+  }, [params]);
 
   function handleChange(e) {
+    e.preventDefault();
     const { name, value } = e.target
-    setData({ ...data, [name]: value})
+    setDataForm({ ...dataForm, [name]: value})
   }
 
   function handleSubmit(e) {
     e.preventDefault();
-    updateDish(params.id, data)
+    updateDish(params.id, dataForm).then(console.log)
   }
 
   return (

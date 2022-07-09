@@ -25,3 +25,7 @@ export function createDish(newDishData) {
     body: JSON.stringify(newDishData)
   })
 }
+
+export function getDish(id) {
+  return fetch(`${BASE_URL}/products/${id}`).then(response => response.json())
+}

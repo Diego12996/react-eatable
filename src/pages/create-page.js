@@ -1,8 +1,9 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Input from "../components/input";
 import { createDish } from "../services/dishes-services";
-
 function CreateDish() {
+  const navigate = useNavigate()
 
   const [data, setData] = useState({
     name: "",
@@ -22,6 +23,7 @@ function CreateDish() {
   function handleSubmit(e) {
     e.preventDefault();
     createDish(data)
+    navigate("/")
   }
 
   return (

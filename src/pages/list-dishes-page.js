@@ -4,6 +4,7 @@ import styled from '@emotion/styled'
 import { colors } from "../styles/colors";
 import { RiEditBoxFill, RiDeleteBinFill } from 'react-icons/ri'
 import { Link } from "react-router-dom";
+import { ButtonMedium } from "../components/button";
 
 const Container = styled.div`
   display: flex;
@@ -34,19 +35,16 @@ const Icons = styled.div`
   color: #FA4A0C;
 `
 
-const ButtonMedium = styled.button`
-  border: none;
-  width: 262px;
-  height: 47px;
-  color: white;
-  border-radius: 30px;
-  background: #FA4A0C;
-  display: flex;
-  flex-direction: row;
+const Modal = styled.div`
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  background-color: #000000bf;
+  display: ${props => props.isOpen ? "flex" : "none"};
   justify-content: center;
-  align-items: center; 
-  padding: 12px 16px;
-
+  align-items: center;
 `
 
 const DeleteModal = styled.div`
@@ -59,21 +57,40 @@ const DeleteModal = styled.div`
   border-radius: 20px;
 `
 
-function ConfirmDelete() {
-  return (
-    <DeleteModal>
-      <h3>Are you sure?</h3>
-      <ButtonMedium>Yes, delete it!</ButtonMedium>
-      <ButtonMedium>No, cancel!</ButtonMedium>
-    </DeleteModal>
-  )
-}
-
 function ListDishes() {
+  const [dishes, setDishes] = useState([]);
+  const [isOpen, setIsOpen] = useState(false);
+  const [currentId, setCurrentId] = useState(null);
+
+  function handleDeleteModal(id) {
+    setCurrentId(id)
+    setIsOpen(true)
+  }
+
+  function handleCancelDelete() {
+    setIsOpen(false)
+  }
+
+  function handleConfirmDelete() {
+    deleteDish(currentId)
+    const newDishes = dishes.filter(dish => dish.id !== currentId)
+    setIsOpen(false)
+    setDishes(newDishes)
+  }
+
+  function ConfirmDelete() {
+    return (
+        <DeleteModal>
+          <h3>Are you sure?</h3>
+          <ButtonMedium onClick={handleConfirmDelete}>Yes, delete it!</ButtonMedium>
+          <ButtonMedium style={{background: "#EFB60E" }} onClick={handleCancelDelete} >No, cancel!</ ButtonMedium>
+        </DeleteModal>
+    )
+  }
+  
+
   function DishCard({dish}) {
-    function Borrar() {
-      deleteDish(dish.id)
-    }
+
     return (
       <FoodCard>
         <DishImage src={dish.picture_url} alt="dish delicious" />
@@ -84,27 +101,13 @@ function ListDishes() {
             <Link to={`/update/${dish.id}`}>
               <RiEditBoxFill />
             </Link>
-            <RiDeleteBinFill onClick={Borrar}/>
+            <RiDeleteBinFill onClick={() => handleDeleteModal(dish.id)} />
           </Icons>
         </DishInfo>
       </FoodCard>
     )
   }
 
-  const Modal = styled.div`
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    right: 0;
-    left: 0;
-    background-color: #000000bf;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  `
-
-  const [dishes, setDishes] = useState([]);
-  
   useEffect(() => {
     getDishes()
       .then((data) => setDishes(data))
@@ -115,11 +118,11 @@ function ListDishes() {
     <div>
       <h1>Products Dashboard</h1>
       <Container>{dishes.map(dish=>(
-        <DishCard key={dish.id} dish={dish} />
+          <DishCard key={dish.id} dish={dish} />
         ))}
       </Container>
       <Link to="/create">Create Product</Link>
-      <Modal>
+      <Modal isOpen={isOpen}>
         <ConfirmDelete />
       </Modal>
     </div>
