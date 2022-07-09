@@ -4,11 +4,13 @@ import styled from '@emotion/styled'
 import { colors } from "../styles/colors";
 import { RiEditBoxFill, RiDeleteBinFill } from 'react-icons/ri'
 import { Link } from "react-router-dom";
-import { ButtonMedium } from "../components/button";
+import { ButtonLarge, ButtonMedium, ContainerButton } from "../components/button";
 
 const Container = styled.div`
   display: flex;
   flex-wrap: wrap;
+  align-items: center;
+  gap: 1.25rem;
 `
 
 const DishImage = styled.img`
@@ -16,6 +18,9 @@ const DishImage = styled.img`
   width: 130px;
   height: 130px;
   border-radius: 50%;
+  position: relative;
+  top: -38px;
+  box-shadow: 0px 20px 20px rgba(0, 0, 0, 0.2);
 `
 
 const FoodCard = styled.div`
@@ -23,16 +28,30 @@ const FoodCard = styled.div`
   height: 250px;
 `
 
+const Title = styled.p`
+  font-weight: 600;
+  font-size: 22px;
+  line-height: 28px;
+  text-align: center;
+  margin-top: 3rem;
+  margin-bottom: 2.15rem;
+`
+
 const DishInfo = styled.div`
   border-radius: 30px;
   box-shadow: 0px 30px 60px rgba(57, 57, 57, 0.1);
-  backgorund: ${colors.white};
+  text-align: center;
+  font-weight: 600;
+  font-size: 22px;
+  line-height: 28px;
+  background: white;
 `
 
 const Icons = styled.div`
   display: flex;
   justify-content: space-around;
   color: #FA4A0C;
+  margin-top: 10px;
 `
 
 const Modal = styled.div`
@@ -93,15 +112,15 @@ function ListDishes() {
 
     return (
       <FoodCard>
-        <DishImage src={dish.picture_url} alt="dish delicious" />
         <DishInfo>
-          <h3>{dish.name}</h3>
-          <h3 style={{color: "#FA4A0C"}}>{`$${dish.price}`}</h3>
+        <DishImage src={dish.picture_url} alt="dish delicious" />
+          <p>{dish.name}</p>
+          <p style={{color: "#FA4A0C"}}>{`$${dish.price}`}</p>
           <Icons>
             <Link to={`/update/${dish.id}`}>
-              <RiEditBoxFill />
+              <RiEditBoxFill style={{width: "17px"}} />
             </Link>
-            <RiDeleteBinFill onClick={() => handleDeleteModal(dish.id)} />
+            <RiDeleteBinFill style={{width: "17px"}} onClick={() => handleDeleteModal(dish.id)} />
           </Icons>
         </DishInfo>
       </FoodCard>
@@ -115,17 +134,23 @@ function ListDishes() {
   }, []);
 
   return (
-    <div>
-      <h1>Products Dashboard</h1>
-      <Container>{dishes.map(dish=>(
-          <DishCard key={dish.id} dish={dish} />
-        ))}
-      </Container>
-      <Link to="/create">Create Product</Link>
-      <Modal isOpen={isOpen}>
-        <ConfirmDelete />
-      </Modal>
-    </div>
+    <>
+      <div style={{}}>
+        <Title>Products Dashboard</Title>
+        <Container>{dishes.map(dish=>(
+            <DishCard key={dish.id} dish={dish} />
+          ))}
+        </Container>
+        <ContainerButton>
+          <Link style={{textDecoration: "none"}} to="/create">
+            <ButtonLarge>Create Product</ButtonLarge>
+          </Link>
+        </ContainerButton>
+        <Modal isOpen={isOpen}>
+          <ConfirmDelete />
+        </Modal>
+      </div>
+    </>
   );
 }
 

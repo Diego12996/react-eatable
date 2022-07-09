@@ -1,28 +1,35 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Input from "../components/input";
 import { createDish } from "../services/dishes-services";
-function CreateDish() {
-  const navigate = useNavigate()
 
-  const [data, setData] = useState({
-    name: "",
-    price: "",
-    description: "",
-    category: "",
-    picture_url: ""
+function CreateDish() {
+  const navigate = useNavigate();
+  const dataFormStorage = JSON.parse(localStorage.getItem("dataDish"));
+
+  const [dataForm, setDataForm] = useState({
+    name: dataFormStorage?.name || "",
+    price: dataFormStorage?.price || "",
+    description: dataFormStorage?.description ||"",
+    category: dataFormStorage?.category || "",
+    picture_url: dataFormStorage?.picture_url || ""
   })
 
-  const { name, price, description, category, picture_url} = data;
+  const { name, price, description, category, picture_url} = dataForm;
+
+  useEffect(() => {
+    localStorage.setItem("dataDish", JSON.stringify(dataForm))
+  }, [dataForm])
 
   function handleChange(e) {
     const { name, value } = e.target
-    setData({ ...data, [name]: value})
+    setDataForm({ ...dataForm, [name]: value})
   }
 
   function handleSubmit(e) {
+    localStorage.removeItem("dataDish")
     e.preventDefault();
-    createDish(data)
+    createDish(dataForm)
     navigate("/")
   }
 

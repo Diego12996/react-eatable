@@ -6,7 +6,6 @@ import { getDish, updateDish } from "../services/dishes-services";
 function EditDish() {
 
   const params = useParams()
-  console.log(params)
   const [dataForm, setDataForm] = useState({
     name: "",
     price: "",
@@ -14,8 +13,6 @@ function EditDish() {
     category: "",
     picture_url: ""
   })
-
-  console.log(dataForm)
 
   const { name, price, description, category, picture_url} = dataForm;
 
@@ -33,7 +30,7 @@ function EditDish() {
 
   function handleSubmit(e) {
     e.preventDefault();
-    updateDish(params.id, dataForm).then(console.log)
+    updateDish(params.id, dataForm)
   }
 
   return (

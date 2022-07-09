@@ -13,9 +13,13 @@ export const ButtonMedium = styled.button`
   align-items: center; 
   padding: 12px 16px;
   cursor: pointer;
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 23px;
 `
 
 export const ButtonLarge = styled.button`
+  text-decoration: none;
   border: none;
   width: 310px;
   height: 70px;
@@ -27,4 +31,17 @@ export const ButtonLarge = styled.button`
   justify-content: center;
   align-items: center; 
   padding: 0.75rem 1rem;
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 23px;
+  text-align: center;
+  
+`
+export const ContainerButton = styled.div`
+  display: flex;
+  align-items: center;
+  background: #F6F6F9;
+  position: fixed;
+  bottom: 0;
+  padding: 1rem;
 `
